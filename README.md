@@ -5,7 +5,6 @@ Frontend React (Vite) untuk platform belajar BelajarYuk. Mengonsumsi REST API ba
 ## Prasyarat
 
 - Node.js 18+
-- Backend API berjalan di **port 3004** (lihat repo backend)
 
 ## Konfigurasi environment
 
@@ -15,7 +14,13 @@ Salin contoh env dan sesuaikan jika perlu:
 cp .env.example .env
 ```
 
-Isi `.env`:
+Default production API:
+
+```env
+VITE_API_URL=https://belajaryuk-backend.onrender.com
+```
+
+Untuk development lokal dengan backend di mesin sendiri:
 
 ```env
 VITE_API_URL=http://localhost:3004
@@ -24,9 +29,6 @@ VITE_API_URL=http://localhost:3004
 Variabel ini dipakai untuk semua request API dan URL ikon mata pelajaran (`iconUrl` relatif dari backend).
 
 ## Menjalankan
-
-1. Jalankan backend di `http://localhost:3004` (pastikan CORS mengizinkan origin frontend, mis. `http://localhost:3000`).
-2. Install dependensi dan jalankan dev server:
 
 ```bash
 npm install
@@ -42,3 +44,22 @@ npm run build
 npm run preview
 ```
 
+## Alur aplikasi
+
+| Rute | Keterangan |
+|------|------------|
+| `/` | Landing |
+| `/subjects` | Daftar mata pelajaran (API publik) |
+| `/subjects/:id` | Detail mapel + bab + daftar materi |
+| `/subjects/:id/:chapterId/:materialId` | Konten materi (teks / video YouTube) |
+| `/login`, `/register` | Auth |
+| `/forgot-password`, `/reset-password` | Reset kata sandi |
+| `/profile` | Profil (perlu login, `GET /api/auth/me`) |
+
+Rute lama `/dashboard/*` diarahkan ke `/subjects/*`.
+
+## API backend
+
+- Production: [https://belajaryuk-backend.onrender.com](https://belajaryuk-backend.onrender.com)
+- Layer kode: `src/api/` (client, types, auth, curriculum), `src/hooks/`
+- Token disimpan di `localStorage` (`belajaryuk_access_token`)
