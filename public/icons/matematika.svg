@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" fill="none">
+  <text x="6" y="18" font-family="Nunito, sans-serif" font-size="14" font-weight="700" fill="#2d6cb5">+</text>
+  <text x="28" y="18" font-family="Nunito, sans-serif" font-size="14" font-weight="700" fill="#2d6cb5"></text>
+  <text x="6" y="40" font-family="Nunito, sans-serif" font-size="14" font-weight="700" fill="#2d6cb5">×</text>
+  <text x="28" y="40" font-family="Nunito, sans-serif" font-size="14" font-weight="700" fill="#2d6cb5">÷</text>
+</svg>

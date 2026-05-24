@@ -1,0 +1,93 @@
+/* BelajarYuk — design tokens & base */
+:root {
+  --color-blue-dark: #1a4f8a;
+  --color-blue-mid: #2d6cb5;
+  --color-blue-light: #4a90e2;
+  --color-blue-sky: #6eb5f5;
+  --color-yellow: #ffd54f;
+  --color-yellow-dark: #f5b800;
+  --color-purple: #7c6cf0;
+  --color-purple-light: #a594ff;
+  --color-white: #ffffff;
+  --color-text-on-blue: rgba(255, 255, 255, 0.92);
+  --color-text-muted-on-blue: rgba(255, 255, 255, 0.72);
+
+  --gradient-hero: linear-gradient(165deg, #4a90e2 0%, #2d6cb5 45%, #1a4f8a 100%);
+  --gradient-button: linear-gradient(135deg, #8b7cf6 0%, #6b5ce7 100%);
+  --gradient-button-hover: linear-gradient(135deg, #9d8fff 0%, #7c6cf0 100%);
+
+  --space-1: 8px;
+  --space-2: 16px;
+  --space-3: 24px;
+  --space-4: 32px;
+  --space-5: 48px;
+  --space-6: 64px;
+  --space-7: 96px;
+
+  --radius-pill: 999px;
+  --radius-card: 20px;
+  --radius-lg: 28px;
+
+  --font-body: 'Nunito', system-ui, sans-serif;
+  --font-logo: 'Fredoka', 'Nunito', system-ui, sans-serif;
+
+  --shadow-card: 0 12px 40px rgba(26, 79, 138, 0.18);
+  --shadow-button: 0 6px 20px rgba(107, 92, 231, 0.35);
+
+  --transition: 0.25s ease;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.6;
+  color: var(--color-blue-dark);
+  background: var(--color-white);
+  -webkit-font-smoothing: antialiased;
+}
+
+#root {
+  min-height: 100vh;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+  border: none;
+  background: none;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
