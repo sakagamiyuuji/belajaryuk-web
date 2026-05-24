@@ -249,11 +249,20 @@
   position: absolute;
   inset: 0;
   z-index: 0;
+  background-size: cover;
+  background-repeat: no-repeat;
 }
 
-.landing-value-card__bg svg {
-  width: 100%;
-  height: 100%;
+.landing-value-card__bg::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to top,
+    rgba(26, 79, 138, 0.88) 0%,
+    rgba(26, 79, 138, 0.5) 45%,
+    rgba(26, 79, 138, 0.35) 100%
+  );
 }
 
 .landing-value-card__content {
@@ -286,7 +295,7 @@
   margin: 0;
   font-size: 0.9375rem;
   line-height: 1.65;
-  color: var(--color-text-muted-on-blue);
+  color: rgba(255, 255, 255, 0.88);
 }
 
 /* ── Features / About ── */
