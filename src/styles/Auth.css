@@ -110,7 +110,7 @@
 
 .auth-field__input {
   width: 100%;
-  padding: 14px 16px 14px 44px;
+  padding: 14px 16px;
   border: 1px solid #e0e8f4;
   border-radius: 12px;
   font-family: inherit;
@@ -118,6 +118,11 @@
   color: var(--color-blue-dark);
   background: #f5f9ff;
   transition: border-color var(--transition), box-shadow var(--transition);
+}
+
+/* Ruang kiri hanya jika ada ikon di dalam wrap */
+.auth-field__input-wrap:has(.auth-field__icon) .auth-field__input {
+  padding-left: 44px;
 }
 
 .auth-field__input::placeholder {
