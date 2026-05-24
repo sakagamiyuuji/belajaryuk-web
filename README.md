@@ -63,3 +63,27 @@ Rute lama `/dashboard/*` diarahkan ke `/subjects/*`.
 - Production: [https://belajaryuk-backend.onrender.com](https://belajaryuk-backend.onrender.com)
 - Layer kode: `src/api/` (client, types, auth, curriculum), `src/hooks/`
 - Token disimpan di `localStorage` (`belajaryuk_access_token`)
+
+### Reset password (production)
+
+Backend mengirim email dengan link `{RESET_PASSWORD_URL}?token=...`. Di Render/backend, set:
+
+```env
+RESET_PASSWORD_URL=https://<domain-web-anda>/reset-password
+```
+
+Contoh lokal: `http://localhost:3000/reset-password` (bukan port API `3004`).
+
+Frontend membaca `?token=` di `/reset-password` dan mengirim `POST /api/auth/reset-password`.
+
+## Checklist fitur
+
+| Fitur | Status |
+|-------|--------|
+| Login / register / logout | ✓ |
+| Forgot password (pesan sukses generik) | ✓ |
+| Reset password (`?token=` + konfirmasi password) | ✓ |
+| Profil protected (`GET /api/auth/me`) | ✓ |
+| Kurikulum dari API (subjects, chapters, materials) | ✓ |
+| Materi teks & video YouTube + likesCount | ✓ |
+| Icon mapel via `VITE_API_URL` + `iconUrl` | ✓ |

@@ -1,16 +1,16 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { forgotPassword } from '../api/auth';
-import { ApiRequestError } from '../api/client';
 import AuthLayout from '../components/AuthLayout.jsx';
-import { useToast } from '../context/ToastContext.jsx';
+
+const GENERIC_SUCCESS =
+  'Jika email terdaftar, link reset telah dikirim. Periksa kotak masuk atau folder spam.';
 
 export default function ForgotPassword() {
   const [email, setEmail] = useState('');
   const [loading, setLoading] = useState(false);
   const [sent, setSent] = useState(false);
   const [error, setError] = useState('');
-  const { showError } = useToast();
 
   async function handleSubmit(e) {
     e.preventDefault();
@@ -24,16 +24,11 @@ export default function ForgotPassword() {
     setLoading(true);
     try {
       await forgotPassword(email.trim());
-      setSent(true);
-    } catch (err) {
-      const message =
-        err instanceof ApiRequestError
-          ? err.message
-          : 'Gagal mengirim permintaan reset. Coba lagi.';
-      setError(message);
-      showError(message);
+    } catch {
+      // Jangan bocorkan apakah email terdaftar — tampilkan pesan sukses generik sama.
     } finally {
       setLoading(false);
+      setSent(true);
     }
   }
 
@@ -50,14 +45,14 @@ export default function ForgotPassword() {
         <h2>Reset kata sandi</h2>
         <p>
           {sent
-            ? 'Jika email terdaftar, instruksi reset telah dikirim.'
+            ? GENERIC_SUCCESS
             : 'Masukkan email akunmu untuk menerima tautan reset.'}
         </p>
       </div>
 
       {sent ? (
-        <p className="auth-page__success">
-          Periksa kotak masuk email kamu. Jika tidak ada, cek folder spam.
+        <p className="auth-page__success" role="status">
+          {GENERIC_SUCCESS}
         </p>
       ) : (
         <form onSubmit={handleSubmit} noValidate>

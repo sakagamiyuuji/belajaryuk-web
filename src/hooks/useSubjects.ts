@@ -6,7 +6,7 @@ export function useSubjects() {
   const { data, loading, error, reload } = useAsyncData(
     async () => {
       const result = await fetchSubjects();
-      return result.subjects;
+      return [...result.subjects].sort((a, b) => a.orderIndex - b.orderIndex);
     },
     [],
   );

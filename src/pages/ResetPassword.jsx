@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import { resetPassword } from '../api/auth';
 import { ApiRequestError } from '../api/client';
@@ -10,24 +10,37 @@ export default function ResetPassword() {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const tokenFromUrl = searchParams.get('token') ?? '';
+  const hasTokenFromUrl = Boolean(tokenFromUrl.trim());
 
   const [token, setToken] = useState(tokenFromUrl);
   const [newPassword, setNewPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
+  const [showConfirm, setShowConfirm] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const { showError } = useToast();
+
+  useEffect(() => {
+    if (tokenFromUrl) {
+      setToken(tokenFromUrl);
+    }
+  }, [tokenFromUrl]);
 
   async function handleSubmit(e) {
     e.preventDefault();
     setError('');
 
     if (!token.trim()) {
-      setError('Token reset wajib diisi.');
+      setError('Token reset wajib diisi. Buka tautan dari email atau minta reset baru.');
       return;
     }
     if (newPassword.length < 8) {
       setError('Kata sandi baru minimal 8 karakter.');
+      return;
+    }
+    if (newPassword !== confirmPassword) {
+      setError('Konfirmasi kata sandi tidak cocok.');
       return;
     }
 
@@ -61,7 +74,11 @@ export default function ResetPassword() {
     >
       <div className="auth-page__card-header">
         <h2>Kata sandi baru</h2>
-        <p>Masukkan token dari email dan kata sandi barumu.</p>
+        <p>
+          {hasTokenFromUrl
+            ? 'Atur kata sandi barumu. Tautan dari email sudah dikenali.'
+            : 'Buka tautan dari email atau masukkan token reset secara manual.'}
+        </p>
       </div>
 
       <form onSubmit={handleSubmit} noValidate>
@@ -71,23 +88,27 @@ export default function ResetPassword() {
           </p>
         ) : null}
 
-        <div className="auth-field">
-          <label className="auth-field__label visually-hidden" htmlFor="reset-token">
-            Token
-          </label>
-          <div className="auth-field__input-wrap">
-            <input
-              id="reset-token"
-              name="token"
-              type="text"
-              className="auth-field__input"
-              placeholder="Token reset"
-              value={token}
-              onChange={(ev) => setToken(ev.target.value)}
-              required
-            />
+        {!hasTokenFromUrl ? (
+          <div className="auth-field">
+            <label className="auth-field__label visually-hidden" htmlFor="reset-token">
+              Token
+            </label>
+            <div className="auth-field__input-wrap">
+              <input
+                id="reset-token"
+                name="token"
+                type="text"
+                className="auth-field__input"
+                placeholder="Token reset"
+                value={token}
+                onChange={(ev) => setToken(ev.target.value)}
+                required
+              />
+            </div>
           </div>
-        </div>
+        ) : (
+          <input type="hidden" name="token" value={token} />
+        )}
 
         <div className="auth-field">
           <label className="auth-field__label visually-hidden" htmlFor="reset-password">
@@ -116,6 +137,43 @@ export default function ResetPassword() {
             </button>
           </div>
         </div>
+
+        <div className="auth-field">
+          <label className="auth-field__label visually-hidden" htmlFor="reset-confirm-password">
+            Konfirmasi kata sandi
+          </label>
+          <div className="auth-field__input-wrap">
+            <input
+              id="reset-confirm-password"
+              name="confirmPassword"
+              type={showConfirm ? 'text' : 'password'}
+              autoComplete="new-password"
+              className="auth-field__input auth-field__input--with-toggle"
+              placeholder="Ulangi kata sandi baru"
+              value={confirmPassword}
+              onChange={(ev) => setConfirmPassword(ev.target.value)}
+              minLength={8}
+              required
+            />
+            <button
+              type="button"
+              className="auth-field__toggle"
+              aria-label={showConfirm ? 'Sembunyikan konfirmasi' : 'Tampilkan konfirmasi'}
+              onClick={() => setShowConfirm((v) => !v)}
+            >
+              <PasswordToggleIcon visible={showConfirm} />
+            </button>
+          </div>
+        </div>
+
+        {!hasTokenFromUrl ? (
+          <p className="auth-page__hint">
+            Belum punya token?{' '}
+            <Link to="/forgot-password" className="auth-page__link">
+              Minta tautan reset
+            </Link>
+          </p>
+        ) : null}
 
         <button type="submit" className="auth-page__submit" disabled={loading}>
           {loading ? 'Memproses…' : 'Simpan kata sandi'}
