@@ -126,7 +126,7 @@ export default function Landing() {
               milik mereka yang mempersiapkannya hari ini.
             </p>
             <div className="landing-hero__actions">
-              <Link to="/subjects" className="landing-btn landing-btn--primary">
+              <Link to="/login" className="landing-btn landing-btn--primary">
                 Mulai Belajar
               </Link>
               <Link to="/register" className="landing-btn landing-btn--outline">
