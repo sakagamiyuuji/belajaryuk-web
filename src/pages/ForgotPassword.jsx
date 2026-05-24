@@ -4,7 +4,7 @@ import { forgotPassword } from '../api/auth';
 import AuthLayout from '../components/AuthLayout.jsx';
 
 const GENERIC_SUCCESS =
-  'Jika email terdaftar, link reset telah dikirim. Periksa kotak masuk atau folder spam.';
+  'Email reset telah dikirim jika email terdaftar. Periksa kotak masuk atau folder spam. Jika tidak ada, silakan hubungi admin.';
 
 export default function ForgotPassword() {
   const [email, setEmail] = useState('');
