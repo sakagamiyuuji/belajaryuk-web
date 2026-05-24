@@ -44,6 +44,10 @@ npm run build
 npm run preview
 ```
 
+### Deploy Vercel (SPA routing)
+
+File `vercel.json` mengarahkan semua path (mis. `/reset-password`, `/subjects/...`) ke `index.html` agar React Router tidak 404. Setelah menambah/mengubah file ini, **redeploy** di Vercel.
+
 ## Alur aplikasi
 
 | Rute | Keterangan |
